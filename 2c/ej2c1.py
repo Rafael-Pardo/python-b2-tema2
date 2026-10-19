@@ -38,15 +38,23 @@ import pandas as pd
 def select_rows_and_columns(
     df: pd.DataFrame, columns: Union[List[str], List[int]], rows: Optional[slice] = None
 ) -> pd.DataFrame:
-    # Write here your code
-    pass
+       if rows is None:
+        rows = slice(None)  # Select all rows if none specified
+
+    if isinstance(columns[0], int):
+        return df.iloc[rows, columns]
+    else:
+        return df.loc[rows, columns]
 
 
 def select_rows_with_conditions(
     df: pd.DataFrame, conditions: Union[str, List[str]]
 ) -> pd.DataFrame:
-    # Write here your code
-    pass
+        if isinstance(conditions, list):
+        query_string = " & ".join(conditions)
+    else:
+        query_string = conditions
+    return df.query(query_string)
 
 
 # Para probar el código, descomenta las siguientes líneas y asegúrate de tener un archivo CSV 'data/grades.csv'
